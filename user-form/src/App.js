@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -9,6 +9,23 @@ function App() {
   const [image, setImage] = useState();
   const [inputName, setInputName] = useState("");
  
+  useEffect(() => {
+    async function fetchListUsers(){
+        try {
+            const urlRequest = "http://localhost:8000/uploads"
+            const respond = await fetch(urlRequest)
+            const respondData= await respond.json()
+
+            setActualList(respondData)
+        } catch (error) {
+            console.log("Failed to fetch..." + error.message)
+        }
+    }
+
+    fetchListUsers()
+  }, []);
+
+
   // submit SEND
   const send = () => {
     const formData = new FormData();

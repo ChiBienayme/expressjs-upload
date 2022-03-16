@@ -2,9 +2,11 @@ const express = require("express");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
+const cors = require("cors");
 const app = express();
 const upload = multer({ dest: "./public/uploads" });
 
+app.use(cors());
 app.use(express.static("public"));
 
 const users = [
@@ -34,8 +36,6 @@ app.post("/user", upload.single("image"), (req, res) => {
 	res.json({ message: "New user is added",
         users})
 });
-
-
 
 
 app.listen(8000, () => console.log("Listening"));
